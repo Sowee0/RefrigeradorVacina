@@ -191,7 +191,7 @@ void menuAcknowledgeTrigger();
 
 void menuAcknowledgeTriggerChange();
 
-void sendSMS (int type);
+void sendSMS (char type);
 
 
 
@@ -698,7 +698,7 @@ void menuSetNumberChange(){
     if(readButtons() == 'r')
     cursorPosition++;
 
-	if (cursorPosition > 12)
+	if (cursorPosition == 12)
 	cursorPosition = 0;
 	
 	if (phoneNumber[cursorPosition]>9)
@@ -713,8 +713,9 @@ void menuSendTxtMsg(){
     lcd_puts(strbuff);
     
     if(readButtons() == 'l'){
+        sendSMS('t');
         menuOption = 'm';
-		sendSMS('t');
+		
         
     }
     if(readButtons() == 'r')
@@ -786,39 +787,42 @@ void menuTextConfirmation(){
 	
 }
 
-void sendSMS (int type){
+void sendSMS (char type){
     char phoneNumberASCII [11];
     int i =0;
-    
-    for(i=0;i<12;i++){
-    phoneNumberASCII[i] = phoneNumber[i] + 48;
-    }
+    printf("%c", type);
+//    for(i=0;i<12;i++){
+//    phoneNumberASCII[i] = phoneNumber[i] + 48;
+//    }
     
     
 	
 	printf("AT+CMGF=1");
 	printf("AT+CMGS=\"");
-	printf("%s",phoneNumberASCII);
+    
+    putchar(phoneNumber[0] +48);
+    putchar(phoneNumber[1] +48);
+    putchar(phoneNumber[2] +48);
+    putchar(phoneNumber[3] +48);
+    putchar(phoneNumber[4] +48);
+    putchar(phoneNumber[5] +48);
+    putchar(phoneNumber[6] +48);
+    putchar(phoneNumber[7] +48);
+    putchar(phoneNumber[8] +48);
+    putchar(phoneNumber[9] +48);
+    putchar(phoneNumber[10] +48);
+    putchar(phoneNumber[11] +48);
 	printf("\"");
+    
+    
+    if(type == 't'){
 	printf("Hey, let me know you received this!");
-	
-	switch(type){
-		
-		case 'e':
-		
-		printf("Your microfreezer temperature is above the max level set");
-		printf("%c", 26);
-		
-		break;
-		
-		case 't':
-		printf("Hey, let me know you received this!");
-		printf("%c", 26);
-		
-		break;
-		
-	}
-	
-	
-	
+	printf("%c", 26);
+    }
+    
+    if(type == 'e'){
+	printf("Your microfreezer temperature is above the max level set");
+	printf("%c", 26);
+    }
+    
 }

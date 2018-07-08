@@ -30,3 +30,19 @@
 
 # Debug files
 *.dSYM/
+
+*.atsln
+
+refrigeradorVacina\.c~
+
+refrigeradorVacina\.cbi
+
+refrigeradorVacina\.cci
+
+refrigeradorVacina\.cof
+
+refrigeradorVacina\.cproj
+
+refrigeradorVacina\.fct
+
+refrigeradorVacina\.prj~
