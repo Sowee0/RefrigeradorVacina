@@ -57,7 +57,7 @@ float maximumTemp = 18.3;
 unsigned char x = 0;
 unsigned char y = 0;
 char strbuff[16];
-int phoneNumber[11] = {3,2,9,9,9,6,7,4,7,3,2};
+int phoneNumber[12] = {0,3,2,9,9,9,6,7,4,7,3,2};
 int cursorPosition = 0;
 int sentMessage = 0;
 //char menuOrder[5] = {'i','t','n','m','r','e'};
@@ -688,13 +688,8 @@ void menuSetNumberChange(){
     lcd_putchar(phoneNumber[9] + 48);
     lcd_gotoxy(10,0);
     lcd_putchar(phoneNumber[10] + 48);
-	
-	lcd_gotoxy(cursorPosition,0);
-    
-    _lcd_write_data(0b00001111);
-    
-  
-	lcd_gotoxy(cursorPosition,0);
+    lcd_gotoxy(11,0);
+    lcd_putchar(phoneNumber[11] + 48);
 	
 	if(readButtons() == 'c')
     menuOption = 'n';
@@ -703,7 +698,7 @@ void menuSetNumberChange(){
     if(readButtons() == 'r')
     cursorPosition++;
 
-	if (cursorPosition > 11)
+	if (cursorPosition > 12)
 	cursorPosition = 0;
 	
 	if (phoneNumber[cursorPosition]>9)
@@ -804,18 +799,8 @@ void sendSMS (int type){
 	printf("AT+CMGF=1");
 	printf("AT+CMGS=\"");
 	printf("%s",phoneNumberASCII);
-	/* printf("%s",phoneNumber[1]);
-    printf("%s",phoneNumber[2]);
-    printf("%s",phoneNumber[3]);
-    printf("%s",phoneNumber[4]);
-    printf("%s",phoneNumber[5]);
-    printf("%s",phoneNumber[6]);
-    printf("%s",phoneNumber[7]);
-    printf("%s",phoneNumber[8]);
-    printf("%s",phoneNumber[9]);
-    printf("%s",phoneNumber[10]); */
 	printf("\"");
-	
+	printf("Hey, let me know you received this!");
 	
 	switch(type){
 		
