@@ -554,7 +554,7 @@ void showControls(int type){
         break;
 		
 	case 4:
-        sprintf(strbuff, "      menu");
+        sprintf(strbuff, "     -MENU-");
         x=0;
         y=1;
         lcd_gotoxy(x,y);
@@ -562,7 +562,7 @@ void showControls(int type){
         break;
 		
 	case 5:
-        sprintf(strbuff, "  ^^   ==   next");
+        sprintf(strbuff, "  ^^  DONE  >>");
         x=0;
         y=1;
         lcd_gotoxy(x,y);
@@ -726,7 +726,7 @@ void menuAcknowledgeTrigger(){
 void menuAcknowledgeTriggerChange(){
 	
 	if(triggered){
-	sprintf(strbuff, "RESET VOID");
+	sprintf(strbuff, "   RESET VOID?  ");
 	
 	if(readButtons() == 'l'){
 		triggered = 0;
@@ -802,13 +802,13 @@ void sendSMS (char type){
     
     
     if(type == 't'){
-	printf("Hey, let me know you received this!\n");
+	printf("Hey, this is a test message!\n");
     delay_ms(1000);
 	printf("%c\n", 26);
     }
     
     if(type == 'e'){
-	printf("Your microfreezer temperature is above the %1.f celsius level set\n", maximumTemp);
+	printf("Your microfreezer temperature is above the %.1f celsius level set\n", maximumTemp);
 	delay_ms(1000);
     printf("%c\n", 26);
     
