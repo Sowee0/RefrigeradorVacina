@@ -53,16 +53,16 @@ Data Stack size         : 256
 
 int menuOption = 'i';
 float systemTemperature;
-float maximumTemp = 18.3;
+eeprom float maximumTemp = 18.3;
 unsigned char x = 0;
 unsigned char y = 0;
 char strbuff[16];
-int phoneNumber[12] = {0,3,2,9,9,9,6,7,4,7,3,2};
+eeprom int phoneNumber[12] = {0,3,2,9,9,9,6,7,4,7,3,2};
 int cursorPosition = 0;
 int sentMessage = 0;
 //char menuOrder[5] = {'i','t','n','m','r','e'};
 
-eeprom char stateChange = 0;
+char stateChange = 0;
 
 eeprom char triggered;
 
@@ -388,7 +388,7 @@ float readTemp(){
     
     temp=ds1820_temperature_10(0);
     
-    temperature = (float) temp/100;
+    temperature = temp/10;
     
     
     
@@ -650,9 +650,9 @@ void menuSetTempChange(){
     
     if(readButtons() == 'c')
     menuOption = 't';
-    if(readButtons() == 'l')
-    maximumTemp-=0.2;
     if(readButtons() == 'r')
+    maximumTemp-=0.2;
+    if(readButtons() == 'l')
     maximumTemp+=0.2;
     
     
@@ -813,7 +813,7 @@ void sendSMS (char type){
     }
     
     if(type == 'e'){
-	printf("Your microfreezer temperature is above the max level set\n");
+	printf("Your microfreezer temperature is above the %1.f celsius level set\n", maximumTemp);
 	delay_ms(1000);
     printf("%c\n", 26);
     
