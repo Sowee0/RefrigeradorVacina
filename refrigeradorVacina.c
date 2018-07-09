@@ -2,7 +2,7 @@
 This program was created by the
 CodeWizardAVR V3.12 Advanced
 Automatic Program Generator
-© Copyright 1998-2014 Pavel Haiduc, HP InfoTech s.r.l.
+Â© Copyright 1998-2014 Pavel Haiduc, HP InfoTech s.r.l.
 http://www.hpinfotech.com
 
 Project : 
@@ -43,7 +43,7 @@ Data Stack size         : 256
 #define PARITY_ERROR (1<<UPE)
 #define DATA_OVERRUN (1<<DOR)
 
-//Variáveis de Controle
+//VariÃ¡veis de Controle
 
 #define BUTTONL PIND.4
 #define BUTTONR PIND.2
@@ -52,6 +52,9 @@ Data Stack size         : 256
 
 
 int menuOption = 'i';
+int receivedFlag = 0;
+int receivedMessage = '0';
+
 float systemTemperature;
 eeprom float maximumTemp = 18.3;
 unsigned char x = 0;
@@ -88,6 +91,7 @@ bit rx_buffer_overflow;
 // USART Receiver interrupt service routine
 interrupt [USART_RXC] void usart_rx_isr(void)
 {
+	receivedFlag = 1;
 	char status,data;
 	status=UCSRA;
 	data=UDR;
@@ -189,6 +193,8 @@ void menuAcknowledgeTriggerChange();
 void sendSMS (char type);
 
 void menuTextConfirmation();
+
+void remoteMenu ();
 
 
 
@@ -382,7 +388,7 @@ UBRRL=0x07;
 
 float readTemp(){
     
-    // te vira depois pra fazer essa merda ler a temperatura e vá fazendo o resto do código
+    // te vira depois pra fazer essa merda ler a temperatura e vÃ¡ fazendo o resto do cÃ³digo
     float temperature;
     
     temperature=ds18b20_temperature(0);
@@ -412,7 +418,7 @@ void showMenu(){
 
     switch (menuOption){
 
-        //aqui começa o primeir nível do menu
+        //aqui comeÃ§a o primeir nÃ­vel do menu
     case 'i':
         
         menuHome();
@@ -488,7 +494,7 @@ void showMenu(){
         
         break;
         
-        //aqui começa o segundo nível dos menus
+        //aqui comeÃ§a o segundo nÃ­vel dos menus
         
     case 'u':
         menuSetTempChange();
@@ -814,7 +820,34 @@ void sendSMS (char type){
 	printf("Your microfreezer temperature is above the %.1f celsius level set\n", maximumTemp);
 	delay_ms(1000);
     printf("%c\n", 26);
+	
+	if(type == 'm'){
+	printf("Options:\n");
+	printf("1- Current Temp\n");
+	printf("2- Void Check\n");
+	printf("3- Quit\n");
+	
+	delay_ms(1000);
+    printf("%c\n", 26);
     
     }
+	
     
+}
+
+void remoteMenu (){
+	
+	if(receivedMessage)
+	
+	switch (rm){
+		
+		case 's':
+		sendSMS('m');
+		break;
+		
+		default:
+		break;
+		
+	}
+	
 }
