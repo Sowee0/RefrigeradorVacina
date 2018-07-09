@@ -33,7 +33,7 @@ Data Stack size         : 256
 #include <1wire.h>
 
 // DS1820 Temperature Sensor functions
-#include <ds1820.h>
+#include <ds18b20.h>
 
 // Declare your global variables here
 
@@ -386,12 +386,7 @@ float readTemp(){
     // te vira depois pra fazer essa merda ler a temperatura e vá fazendo o resto do código
     float temperature;
     
-    temp=ds1820_temperature_10(0);
-    
-    temperature = temp/10;
-    
-    
-    
+    temperature=ds18b20_temperature(0);
     return temperature;
 }
 
