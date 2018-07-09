@@ -188,6 +188,8 @@ void menuAcknowledgeTriggerChange();
 
 void sendSMS (char type);
 
+void menuTextConfirmation();
+
 
 
 void main(void)
@@ -511,6 +513,11 @@ void showMenu(){
 		showControls(2);
 	
 		break;
+        
+    case 'q':
+        menuTextConfirmation();
+        showControls(3);
+        break;
     }
 }
 
@@ -678,7 +685,7 @@ void menuSetNumberChange(){
     lcd_putchar(phoneNumber[11] + 48);
 	
 	if(readButtons() == 'c')
-    menuOption = 'n';
+    menuOption = 'p';
     if(readButtons() == 'l')
     phoneNumber[cursorPosition]++;;
     if(readButtons() == 'r')
@@ -700,7 +707,7 @@ void menuSendTxtMsg(){
     
     if(readButtons() == 'l'){
         sendSMS('t');
-        menuOption = 'm';
+        menuOption = 'q';
 		
         
     }
