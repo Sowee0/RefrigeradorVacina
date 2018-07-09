@@ -66,9 +66,6 @@ char stateChange = 0;
 
 eeprom char triggered;
 
-
-int temp;
-
 // USART Receiver buffer
 #define RX_BUFFER_SIZE 8
 char rx_buffer[RX_BUFFER_SIZE];
@@ -145,7 +142,7 @@ char getchar(void)
 #define ADC_VREF_TYPE ((0<<REFS1) | (1<<REFS0) | (0<<ADLAR))
 
 // Read the AD conversion result
-unsigned int read_adc(unsigned char adc_input)
+/*unsigned int read_adc(unsigned char adc_input)
 {
 	ADMUX=adc_input | ADC_VREF_TYPE;
 	// Delay needed for the stabilization of the ADC input voltage
@@ -156,7 +153,7 @@ unsigned int read_adc(unsigned char adc_input)
 	while ((ADCSRA & (1<<ADIF))==0);
 	ADCSRA|=(1<<ADIF);
 	return ADCW;
-}
+} */
 
 
 
@@ -777,7 +774,6 @@ void menuTextConfirmation(){
 }
 
 void sendSMS (char type){
-    char phoneNumberASCII [11];
 	
 	printf("AT+CMGF=1");
     printf("%c", 13);
