@@ -165,8 +165,6 @@ float readTemp();
 
 int readButtons();
 
-void sendMessage();
-
 void showMenu();
 
 void showControls(int type);
@@ -277,16 +275,16 @@ void main(void)
 	MCUCSR=(0<<ISC2);
 
 	// USART initialization
-	// Communication Parameters: 8 Data, 1 Stop, No Parity
-	// USART Receiver: On
-	// USART Transmitter: On
-	// USART Mode: Asynchronous
-	// USART Baud Rate: 19200
-	UCSRA=(0<<RXC) | (0<<TXC) | (0<<UDRE) | (0<<FE) | (0<<DOR) | (0<<UPE) | (0<<U2X) | (0<<MPCM);
-	UCSRB=(1<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (1<<RXEN) | (1<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
-	UCSRC=(1<<URSEL) | (0<<UMSEL) | (0<<UPM1) | (0<<UPM0) | (0<<USBS) | (1<<UCSZ1) | (1<<UCSZ0) | (0<<UCPOL);
-	UBRRH=0x00;
-	UBRRL=0x2F;
+// Communication Parameters: 8 Data, 1 Stop, No Parity
+// USART Receiver: On
+// USART Transmitter: On
+// USART Mode: Asynchronous
+// USART Baud Rate: 115200
+UCSRA=(0<<RXC) | (0<<TXC) | (0<<UDRE) | (0<<FE) | (0<<DOR) | (0<<UPE) | (0<<U2X) | (0<<MPCM);
+UCSRB=(1<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (1<<RXEN) | (1<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+UCSRC=(1<<URSEL) | (0<<UMSEL) | (0<<UPM1) | (0<<UPM0) | (0<<USBS) | (1<<UCSZ1) | (1<<UCSZ0) | (0<<UCPOL);
+UBRRH=0x00;
+UBRRL=0x07;
 
 	// Analog Comparator initialization
 	// Analog Comparator: Off
@@ -413,10 +411,6 @@ int readButtons(){
         stateChange=1;
         return 'c';
     }
-    
-}
-
-void sendMessage(){
     
 }
 
@@ -789,15 +783,11 @@ void menuTextConfirmation(){
 
 void sendSMS (char type){
     char phoneNumberASCII [11];
-    int i =0;
-    printf("%c", type);
-//    for(i=0;i<12;i++){
-//    phoneNumberASCII[i] = phoneNumber[i] + 48;
-//    }
-    
-    
 	
 	printf("AT+CMGF=1");
+    printf("%c", 13);
+    
+    delay_ms(1000);
 	printf("AT+CMGS=\"");
     
     putchar(phoneNumber[0] +48);
@@ -812,17 +802,21 @@ void sendSMS (char type){
     putchar(phoneNumber[9] +48);
     putchar(phoneNumber[10] +48);
     putchar(phoneNumber[11] +48);
-	printf("\"");
+	printf("\""); 
+    printf("%c", 13);
     
     
     if(type == 't'){
-	printf("Hey, let me know you received this!");
-	printf("%c", 26);
+	printf("Hey, let me know you received this!\n");
+    delay_ms(1000);
+	printf("%c\n", 26);
     }
     
     if(type == 'e'){
-	printf("Your microfreezer temperature is above the max level set");
-	printf("%c", 26);
+	printf("Your microfreezer temperature is above the max level set\n");
+	delay_ms(1000);
+    printf("%c\n", 26);
+    
     }
     
 }
